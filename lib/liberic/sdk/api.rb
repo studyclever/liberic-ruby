@@ -3,19 +3,19 @@ module Liberic
     module API
       extend FFI::Library
 
-      if Liberic.binaries_available?
+      if Liberic.binaries_unavailable?
+        # define fake functions to allow tests pass
+        def self.attach_eric_function(name, params, return_type, original_name = nil)
+          define_method(name) { |*options| true }
+        end
+        extend self
+      else
         ffi_lib Liberic.library_path
 
         def self.attach_eric_function(name, params, return_type, original_name = nil)
           original_name ||= 'Eric' + name.to_s.capitalize.gsub(/(?:_|(\/))([a-z\d]*)/) { "#{$1}#{$2.capitalize}" }
           attach_function(name, original_name, params, return_type)
         end
-      else
-        # define fake functions to allow tests pass
-        def self.attach_eric_function(name, params, return_type, original_name = nil)
-          define_method(name) { |*options| true }
-        end
-        extend self
       end
 
       # ERICAPI_DECL int STDCALL EricBearbeiteVorgang(
