@@ -6,9 +6,8 @@ module Liberic
       if Liberic.binaries_unavailable?
         # define fake functions to allow tests pass
         def self.attach_eric_function(name, params, return_type, original_name = nil)
-          define_method(name) { |*options| true }
+          define_singleton_method(name) { |*options| true }
         end
-        extend self
       else
         ffi_lib Liberic.library_path
 
