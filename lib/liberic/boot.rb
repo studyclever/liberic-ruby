@@ -23,7 +23,7 @@ module Liberic
     File.expand_path("libericapi.#{suffix}", ERIC_LIB_FOLDER)
   end
 
-  ERIC_HOME = ENV['ERIC_HOME_272'] || warn(InitializationError.new('ERIC_HOME_27 environment variable not found (set it to the path to the ERiC libraries)'))
+  ERIC_HOME = ENV['ERIC_HOME_27'] || warn(InitializationError.new('ERIC_HOME_27 environment variable not found (set it to the path to the ERiC libraries)'))
   ERIC_LIB_FOLDER = File.expand_path('lib', ERIC_HOME)
 
   def check_eric_version!
